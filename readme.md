@@ -119,7 +119,7 @@ go get -u github.com/zeromicro/go-zero
 
    ```shell
    # for Go
-   go install github.com/zeromicro/go-zero/tools/goctl@latest
+   go install github.com/toby1991/go-zero/tools/goctl@latest
    
    # For Mac
    brew install goctl

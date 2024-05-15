@@ -112,7 +112,7 @@ GO111MODULE=on GOPROXY=https://goproxy.cn/,direct go get -u github.com/zeromicro
 
     ```shell
     # Go
-    GOPROXY=https://goproxy.cn/,direct go install github.com/zeromicro/go-zero/tools/goctl@latest
+    GOPROXY=https://goproxy.cn/,direct go install github.com/toby1991/go-zero/tools/goctl@latest
     
     # For Mac
     brew install goctl

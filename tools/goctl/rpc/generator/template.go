@@ -3,7 +3,7 @@ package generator
 import (
 	"fmt"
 
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
 )
 
 const (
@@ -13,6 +13,9 @@ const (
 	callFunctionTemplateFile          = "call-func.tpl"
 	configTemplateFileFile            = "config.tpl"
 	etcTemplateFileFile               = "etc.tpl"
+	entSchemaUserTemplateFile         = "ent_schema_user.tpl"
+	entGenerateTemplateFile           = "ent_generate.tpl"
+	thirdPartyPbTemplateFile          = "thirdparty.tar.gz"
 	logicTemplateFileFile             = "logic.tpl"
 	logicFuncTemplateFileFile         = "logic-func.tpl"
 	mainTemplateFile                  = "main.tpl"

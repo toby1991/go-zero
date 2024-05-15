@@ -3,13 +3,15 @@ package generator
 import (
 	_ "embed"
 	"fmt"
+	"github.com/zeromicro/go-zero/core/collection"
 	"path/filepath"
+	"strings"
 
-	conf "github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	conf "github.com/toby1991/go-zero/tools/goctl/config"
+	"github.com/toby1991/go-zero/tools/goctl/rpc/parser"
+	"github.com/toby1991/go-zero/tools/goctl/util"
+	"github.com/toby1991/go-zero/tools/goctl/util/format"
+	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
 )
 
 //go:embed svc.tpl
@@ -30,7 +32,14 @@ func (g *Generator) GenSvc(ctx DirContext, _ parser.Proto, cfg *conf.Config) err
 		return err
 	}
 
+	configImport := fmt.Sprintf(`"%v"`, ctx.GetConfig().Package)
+	entImport := fmt.Sprintf(`"%v"`, ctx.GetEnt().Package)
+
+	imports := collection.NewSet()
+	imports.AddStr(configImport, entImport)
+
 	return util.With("svc").GoFmt(true).Parse(text).SaveTo(map[string]any{
-		"imports": fmt.Sprintf(`"%v"`, ctx.GetConfig().Package),
+		//"imports": fmt.Sprintf(`"%v"`, ctx.GetConfig().Package),
+		"imports": strings.Join(imports.KeysStr(), pathx.NL),
 	}, fileName, false)
 }

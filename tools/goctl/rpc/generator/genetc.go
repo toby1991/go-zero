@@ -6,12 +6,12 @@ import (
 	"path/filepath"
 	"strings"
 
-	conf "github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/stringx"
+	conf "github.com/toby1991/go-zero/tools/goctl/config"
+	"github.com/toby1991/go-zero/tools/goctl/rpc/parser"
+	"github.com/toby1991/go-zero/tools/goctl/util"
+	//"github.com/toby1991/go-zero/tools/goctl/util/format"
+	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
+	"github.com/toby1991/go-zero/tools/goctl/util/stringx"
 )
 
 //go:embed etc.tpl
@@ -21,12 +21,13 @@ var etcTemplate string
 // including host, port monitoring configuration items and etcd configuration
 func (g *Generator) GenEtc(ctx DirContext, _ parser.Proto, cfg *conf.Config) error {
 	dir := ctx.GetEtc()
-	etcFilename, err := format.FileNamingFormat(cfg.NamingFormat, ctx.GetServiceName().Source())
-	if err != nil {
-		return err
-	}
+	// use main.yaml as config
+	// etcFilename, err := format.FileNamingFormat(cfg.NamingFormat, ctx.GetServiceName().Source())
+	// if err != nil {
+	// 	return err
+	// }
 
-	fileName := filepath.Join(dir.Filename, fmt.Sprintf("%v.yaml", etcFilename))
+	fileName := filepath.Join(dir.Filename, fmt.Sprintf("%v.yaml", "main" /*etcFilename*/))
 
 	text, err := pathx.LoadTemplate(category, etcTemplateFileFile, etcTemplate)
 	if err != nil {

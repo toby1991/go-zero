@@ -6,17 +6,21 @@ import (
 	"path/filepath"
 	"strings"
 
+	conf "github.com/toby1991/go-zero/tools/goctl/config"
+	"github.com/toby1991/go-zero/tools/goctl/rpc/parser"
+	"github.com/toby1991/go-zero/tools/goctl/util"
+	"github.com/toby1991/go-zero/tools/goctl/util/format"
+	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
+	"github.com/toby1991/go-zero/tools/goctl/util/stringx"
 	"github.com/zeromicro/go-zero/core/collection"
-	conf "github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/stringx"
 )
 
 const logicFunctionTemplate = `{{if .hasComment}}{{.comment}}{{end}}
 func (l *{{.logicName}}) {{.method}} ({{if .hasReq}}in {{.request}}{{if .stream}},stream {{.streamBody}}{{end}}{{else}}stream {{.streamBody}}{{end}}) ({{if .hasReply}}{{.response}},{{end}} error) {
+        if err := in.Validate(); err != nil {
+		return nil, err
+	}
+
 	// todo: add your logic here and delete this line
 	
 	return {{if .hasReply}}&{{.responseType}}{},{{end}} nil

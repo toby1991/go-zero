@@ -3,10 +3,10 @@ package generator
 import (
 	"path/filepath"
 
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util/console"
-	"github.com/zeromicro/go-zero/tools/goctl/util/ctx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
+	"github.com/toby1991/go-zero/tools/goctl/rpc/parser"
+	"github.com/toby1991/go-zero/tools/goctl/util/console"
+	"github.com/toby1991/go-zero/tools/goctl/util/ctx"
+	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
 )
 
 type ZRpcContext struct {
@@ -68,6 +68,18 @@ func (g *Generator) Generate(zctx *ZRpcContext) error {
 	}
 
 	err = g.GenEtc(dirCtx, proto, g.cfg)
+	if err != nil {
+		return err
+	}
+
+	// entgo
+	err = g.GenEnt(dirCtx, proto, g.cfg)
+	if err != nil {
+		return err
+	}
+
+	// pb verification
+	err = g.GenThirdPartyPb(dirCtx, proto, g.cfg)
 	if err != nil {
 		return err
 	}

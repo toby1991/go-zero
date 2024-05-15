@@ -1,28 +1,30 @@
 package generator
 
 import (
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
+	"github.com/toby1991/go-zero/tools/goctl/util/format"
 	"path/filepath"
 	"strings"
 
-	conf "github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
-	"github.com/zeromicro/go-zero/tools/goctl/util/ctx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/tools/goctl/util/stringx"
+	conf "github.com/toby1991/go-zero/tools/goctl/config"
+	"github.com/toby1991/go-zero/tools/goctl/rpc/parser"
+	"github.com/toby1991/go-zero/tools/goctl/util/ctx"
+	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
+	"github.com/toby1991/go-zero/tools/goctl/util/stringx"
 )
 
 const (
-	wd       = "wd"
-	etc      = "etc"
-	internal = "internal"
-	config   = "config"
-	logic    = "logic"
-	server   = "server"
-	svc      = "svc"
-	pb       = "pb"
-	protoGo  = "proto-go"
-	call     = "call"
+	wd           = "wd"
+	etc          = "etc"
+	ent          = "ent"
+	thirdPartyPb = "third-party-pb"
+	internal     = "internal"
+	config       = "config"
+	logic        = "logic"
+	server       = "server"
+	svc          = "svc"
+	pb           = "pb"
+	protoGo      = "proto-go"
+	call         = "call"
 )
 
 type (
@@ -30,6 +32,8 @@ type (
 	DirContext interface {
 		GetCall() Dir
 		GetEtc() Dir
+		GetEnt() Dir
+		GetThirdPartyPb() Dir
 		GetInternal() Dir
 		GetConfig() Dir
 		GetLogic() Dir
@@ -61,6 +65,8 @@ func mkdir(ctx *ctx.ProjectContext, proto parser.Proto, conf *conf.Config, c *ZR
 	error) {
 	inner := make(map[string]Dir)
 	etcDir := filepath.Join(ctx.WorkDir, "etc")
+	entDir := filepath.Join(ctx.WorkDir, "ent")
+	thirdPartyPbDir := filepath.Join(ctx.WorkDir, "thirdparty")
 	clientDir := filepath.Join(ctx.WorkDir, "client")
 	internalDir := filepath.Join(ctx.WorkDir, "internal")
 	configDir := filepath.Join(internalDir, "config")
@@ -130,6 +136,22 @@ func mkdir(ctx *ctx.ProjectContext, proto parser.Proto, conf *conf.Config, c *ZR
 		Base:     filepath.Base(etcDir),
 		GetChildPackage: func(childPath string) (string, error) {
 			return getChildPackage(etcDir, childPath)
+		},
+	}
+	inner[ent] = Dir{
+		Filename: entDir,
+		Package:  filepath.ToSlash(filepath.Join(ctx.Path, strings.TrimPrefix(entDir, ctx.Dir))),
+		Base:     filepath.Base(entDir),
+		GetChildPackage: func(childPath string) (string, error) {
+			return getChildPackage(entDir, childPath)
+		},
+	}
+	inner[thirdPartyPb] = Dir{
+		Filename: thirdPartyPbDir,
+		Package:  filepath.ToSlash(filepath.Join(ctx.Path, strings.TrimPrefix(thirdPartyPbDir, ctx.Dir))),
+		Base:     filepath.Base(thirdPartyPbDir),
+		GetChildPackage: func(childPath string) (string, error) {
+			return getChildPackage(thirdPartyPbDir, childPath)
 		},
 	}
 	inner[internal] = Dir{
@@ -228,6 +250,14 @@ func (d *defaultDirContext) GetCall() Dir {
 
 func (d *defaultDirContext) GetEtc() Dir {
 	return d.inner[etc]
+}
+
+func (d *defaultDirContext) GetEnt() Dir {
+	return d.inner[ent]
+}
+
+func (d *defaultDirContext) GetThirdPartyPb() Dir {
+	return d.inner[thirdPartyPb]
 }
 
 func (d *defaultDirContext) GetInternal() Dir {
