@@ -9,23 +9,23 @@ import (
 	{{.importPackages}}
 )
 
-var configFile = flag.String("f", "etc/{{.serviceName}}.yaml", "the config file")
+var configFile = flag.String("f", "etc/main.yaml", "the config file")
 
 func main() {
 	flag.Parse()
 
-        // config
+    // config
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 
-        // service group
+    // service group
 	svcGroup := service.NewServiceGroup()
 	defer svcGroup.Stop()
 	
 	// pprof
 	svcGroup.Add(pprof.PprofServer(18888))
 
-        // api server
+    // api server
 	server := rest.MustNewServer(c.RestConf)
 
 	ctx := svc.NewServiceContext(c)
@@ -33,7 +33,7 @@ func main() {
 
 	svcGroup.Add(server)
 
-        // start server
+    // start server
 	fmt.Printf("Starting server at %s:%d...\n", c.Host, c.Port)
 	svcGroup.Start()
 }

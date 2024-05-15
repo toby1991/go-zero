@@ -14,23 +14,23 @@ import (
 	"google.golang.org/grpc/reflection"
 )
 
-var configFile = flag.String("f", "etc/{{.serviceName}}.yaml", "the config file")
+var configFile = flag.String("f", "etc/main.yaml", "the config file")
 
 func main() {
 	flag.Parse()
 
-        // config
+    // config
 	var c config.Config
 	conf.MustLoad(*configFile, &c)
 
-        // service group
+    // service group
 	svcGroup := service.NewServiceGroup()
 	defer svcGroup.Stop()
 
 	// pprof
 	svcGroup.Add(pprof.PprofServer(18888))
 
-        // rpc server
+    // rpc server
 	ctx := svc.NewServiceContext(c)
 	s := zrpc.MustNewServer(c.RpcServerConf, func(grpcServer *grpc.Server) {
 {{range .serviceNames}}       {{.Pkg}}.Register{{.GRPCService}}Server(grpcServer, {{.ServerPkg}}.New{{.Service}}Server(ctx))
@@ -41,7 +41,7 @@ func main() {
 	})
 	svcGroup.Add(s)
 
-        // start server
+    // start server
 	fmt.Printf("Starting rpc server at %s...\n", c.ListenOn)
 	svcGroup.Start()
 }

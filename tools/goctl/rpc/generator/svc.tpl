@@ -12,12 +12,9 @@ import (
 	"os"
 	"time"
 
-	"前缀替换成包/rpc/ent/intercept" //@todo 前缀替换成包
-	"前缀替换成包/rpc/ent/migrate" //@todo 前缀替换成包
-	_ "前缀替换成包/rpc/ent/runtime" //@todo 前缀替换成包
-        _ent "entgo.io/ent"
+    _ent "entgo.io/ent"
 
-        {{.imports}}
+    {{.imports}}
 )
 
 type ServiceContext struct {
@@ -77,23 +74,35 @@ func newEnt(conf db.DbConf) *entClient {
 	}
 
 	// limit 1000
-	client.Intercept(
-		intercept.Func(func(ctx context.Context, q intercept.Query) error {
-			// LimitInterceptor limits the number of records returned from
-			// the database to 1000, in case Limit was not explicitly set.
-			if _ent.QueryFromContext(ctx).Limit == nil {
-				q.Limit(1000)
-			}
-			return nil
-		}),
-	)
+	//client.Intercept(
+	//	intercept.Func(func(ctx context.Context, q intercept.Query) error {
+	//		// LimitInterceptor limits the number of records returned from
+	//		// the database to 1000, in case Limit was not explicitly set.
+	//		if _ent.QueryFromContext(ctx).Limit == nil {
+	//			q.Limit(1000)
+	//		}
+	//		return nil
+	//	}),
+	//)
 
 	// db migration
-	// if err := ctx.DB.Schema.Create(nil); err != nil {
-	// 	log.Fatalf("failed creating schema resources: %v", err)
-	// }
-	// Dump migration changes to stdout.
-	if err := client.Schema.WriteTo(context.Background(), os.Stdout, migrate.WithForeignKeys(false)); err != nil {
+
+	// db migration
+	//if err := client.Schema.Create(context.Background(),
+	//	migrate.WithForeignKeys(false),
+	//	migrate.WithDropIndex(true),
+	//	migrate.WithDropColumn(true),
+	//); err != nil {
+	//	log.Fatalf("failed creating schema resources: %v", err)
+	//	return err
+	//}
+	//// Dump migration changes to stdout.
+	if err := client.Schema.WriteTo(context.Background(),
+		os.Stdout,
+		migrate.WithForeignKeys(false),
+		migrate.WithDropIndex(true),
+		migrate.WithDropColumn(true),
+	); err != nil {
 		log.Fatalf("failed printing schema changes: %v", err)
 	}
 
