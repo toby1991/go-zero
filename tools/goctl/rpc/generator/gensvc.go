@@ -35,8 +35,8 @@ func (g *Generator) GenSvc(ctx DirContext, _ parser.Proto, cfg *conf.Config) err
 	configImport := fmt.Sprintf(`"%v"`, ctx.GetConfig().Package)
 	entImport := fmt.Sprintf(`"%v"`, ctx.GetEnt().Package)
 	entMigrateImport := fmt.Sprintf(`"%v"`, pathx.JoinPackages(ctx.GetEnt().Package, "migrate"))
-	entInterceptImport := fmt.Sprintf(`"_ %v"`, pathx.JoinPackages(ctx.GetEnt().Package, "intercept"))
-	entRuntimeImport := fmt.Sprintf(`"_ %v"`, pathx.JoinPackages(ctx.GetEnt().Package, "runtime"))
+	entInterceptImport := fmt.Sprintf(`_ "%v"`, pathx.JoinPackages(ctx.GetEnt().Package, "intercept"))
+	entRuntimeImport := fmt.Sprintf(`_ "%v"`, pathx.JoinPackages(ctx.GetEnt().Package, "runtime"))
 
 	imports := collection.NewSet()
 	imports.AddStr(configImport, entImport, entMigrateImport, entInterceptImport, entRuntimeImport)
