@@ -31,10 +31,10 @@ func (User) Mixin() []ent.Mixin {
 // Fields of the User.
 func (User) Fields() []ent.Field {
 	return []ent.Field{
-		field.Uint64("id").StorageKey("user_id").Positive().Comment("用户ID"),
-		field.String("username").StorageKey("user_name").Comment("用户名").MaxLen(100),
-		field.String("email").StorageKey("user_email").Comment("邮箱").MaxLen(191),
-		field.String("telephone").StorageKey("user_telephone").Comment("手机号").MaxLen(20),
+		field.Uint64("id").StorageKey("user_id").Positive().Immutable().Unique().Comment("用户ID"),
+		field.String("username").StorageKey("user_name").Immutable().Comment("用户名").MaxLen(100),
+		field.String("email").StorageKey("user_email").Optional().Nillable().Comment("邮箱").MaxLen(191),
+		field.String("telephone").StorageKey("user_telephone").Optional().Nillable().Comment("手机号").MaxLen(20),
 		field.String("password").StorageKey("user_password").Comment("密码").MaxLen(64),
 	}
 }
