@@ -74,16 +74,16 @@ func newEnt(conf db.DbConf) *entClient {
 	}
 
 	// limit 1000
-	//client.Intercept(
-	//	intercept.Func(func(ctx context.Context, q intercept.Query) error {
-	//		// LimitInterceptor limits the number of records returned from
-	//		// the database to 1000, in case Limit was not explicitly set.
-	//		if _ent.QueryFromContext(ctx).Limit == nil {
-	//			q.Limit(1000)
-	//		}
-	//		return nil
-	//	}),
-	//)
+	client.Intercept(
+		intercept.Func(func(ctx context.Context, q intercept.Query) error {
+			// LimitInterceptor limits the number of records returned from
+			// the database to 1000, in case Limit was not explicitly set.
+			if _ent.QueryFromContext(ctx).Limit == nil {
+				q.Limit(1000)
+			}
+			return nil
+		}),
+	)
 
 	// db migration
 

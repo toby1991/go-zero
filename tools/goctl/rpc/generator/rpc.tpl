@@ -6,10 +6,11 @@ package {{.package}};
 option go_package="./{{.package}}";
 
 // go install github.com/toby1991/go-zero/tools/goctl@latest
-// goctl rpc protoc demo.proto --go_out=./types --go-grpc_out=./types --zrpc_out=.
-// protoc --validate_out=lang=go:./types *.proto
+// goctl rpc new demo && go generate ./demo/internal/ent && go mod tidy
+// goctl rpc protoc demo.proto --go_out=. --go-grpc_out=. --zrpc_out=.
+// protoc --validate_out=lang=go:./ *.proto
 // go mod tidy
-// go generate ./ent
+// go generate ./internal/ent
 // go mod tidy
 // go run main.go
 
