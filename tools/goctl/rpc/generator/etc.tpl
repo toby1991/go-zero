@@ -37,6 +37,12 @@ BizRedis:
   Db: 0
   Prefix: {{.serviceName}}
 
+# memory
+BizMemory:
+  DefaultExpirationMinute: 60
+  CleanUpIntervalMinute: 60
+  Prefix: {{.serviceName}}
+
 # faktory
 Faktory:
   # docker run --rm -it -v ./faktory:/var/lib/faktory -e "FAKTORY_PASSWORD=123456" -p 127.0.0.1:7419:7419 -p 127.0.0.1:7420:7420 contribsys/faktory:latest /faktory -b :7419 -w :7420 -e production
