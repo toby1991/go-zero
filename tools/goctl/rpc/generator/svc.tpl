@@ -4,6 +4,7 @@ import (
 	"context"
 	"entgo.io/ent/dialect/sql"
 	"github.com/toby1991/go-zero-utils/bizredis"
+	"github.com/toby1991/go-zero-utils/bizmemory"
 	"github.com/toby1991/go-zero-utils/db"
 	"github.com/toby1991/go-zero-utils/faktory"
 	"github.com/toby1991/go-zero-utils/nsq"
@@ -22,6 +23,7 @@ type ServiceContext struct {
 
 	DB       *entClient
 	BizRedis bizredis.RedisClient
+	BizMemory bizmemory.MemoryClient
 	Faktory  faktory.FaktoryClient
 	Nsq      nsq.NsqClient
 }
@@ -32,6 +34,7 @@ func NewServiceContext(c config.Config) *ServiceContext {
 
 		DB:       newEnt(c.Db),
 		BizRedis: bizredis.NewRedis(c.BizRedis),
+		BizMemory: bizmemory.NewMemory(c.BizMemory),
 		Faktory:  faktory.NewFaktory(c.Faktory),
 		Nsq:      nsq.NewNsq(c.Nsq),
 	}
