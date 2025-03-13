@@ -8,6 +8,7 @@ import (
 	"github.com/toby1991/go-zero-utils/db"
 	"github.com/toby1991/go-zero-utils/faktory"
 	"github.com/toby1991/go-zero-utils/nsq"
+	"github.com/toby1991/go-zero-utils/queue"
 	_ "github.com/go-sql-driver/mysql"
 	"log"
 	"os"
@@ -24,8 +25,8 @@ type ServiceContext struct {
 	DB       *entClient
 	BizRedis bizredis.RedisClient
 	BizMemory bizmemory.MemoryClient
-	Faktory  faktory.FaktoryClient
-	Nsq      nsq.NsqClient
+	Faktory  queue.Client
+	Nsq      queue.Client
 }
 
 func NewServiceContext(c config.Config) *ServiceContext {
