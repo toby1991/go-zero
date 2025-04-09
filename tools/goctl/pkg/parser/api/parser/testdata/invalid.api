@@ -187,6 +187,7 @@ service example {
     @handler nestDemo
     post /example/nest (NestDemoReq) returns (NestDemoResp)
 }
+
 -----
 // test case:  unsupported array object request body
 syntax = "v1"
