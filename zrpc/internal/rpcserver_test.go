@@ -6,8 +6,8 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/proc"
-	"github.com/zeromicro/go-zero/internal/mock"
+	"github.com/toby1991/go-zero/core/proc"
+	"github.com/toby1991/go-zero/internal/mock"
 	"google.golang.org/grpc"
 )
 

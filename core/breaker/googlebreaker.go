@@ -3,10 +3,10 @@ package breaker
 import (
 	"time"
 
-	"github.com/zeromicro/go-zero/core/collection"
-	"github.com/zeromicro/go-zero/core/mathx"
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/core/timex"
+	"github.com/toby1991/go-zero/core/collection"
+	"github.com/toby1991/go-zero/core/mathx"
+	"github.com/toby1991/go-zero/core/syncx"
+	"github.com/toby1991/go-zero/core/timex"
 )
 
 const (

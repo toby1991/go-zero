@@ -12,10 +12,10 @@ import (
 	"strings"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/codec"
-	"github.com/zeromicro/go-zero/core/iox"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/rest/httpx"
+	"github.com/toby1991/go-zero/core/codec"
+	"github.com/toby1991/go-zero/core/iox"
+	"github.com/toby1991/go-zero/core/logc"
+	"github.com/toby1991/go-zero/rest/httpx"
 )
 
 const (

@@ -13,6 +13,7 @@ import (
 
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
+	"github.com/toby1991/go-zero/core/logx"
 	apiformat "github.com/toby1991/go-zero/tools/goctl/api/format"
 	"github.com/toby1991/go-zero/tools/goctl/api/parser"
 	apiutil "github.com/toby1991/go-zero/tools/goctl/api/util"
@@ -20,7 +21,6 @@ import (
 	"github.com/toby1991/go-zero/tools/goctl/pkg/golang"
 	"github.com/toby1991/go-zero/tools/goctl/util"
 	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 const tmpFile = "%s-%d"

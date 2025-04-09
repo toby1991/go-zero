@@ -3,7 +3,7 @@ package generator
 import (
 	_ "embed"
 	"fmt"
-	"github.com/zeromicro/go-zero/core/collection"
+	"github.com/toby1991/go-zero/core/collection"
 	"path/filepath"
 	"strings"
 

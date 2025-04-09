@@ -6,6 +6,7 @@ import (
 
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
+	"github.com/toby1991/go-zero/core/errorx"
 	"github.com/toby1991/go-zero/tools/goctl/api/apigen"
 	"github.com/toby1991/go-zero/tools/goctl/api/gogen"
 	apinew "github.com/toby1991/go-zero/tools/goctl/api/new"
@@ -16,7 +17,6 @@ import (
 	modelgen "github.com/toby1991/go-zero/tools/goctl/model/sql/gen"
 	rpcgen "github.com/toby1991/go-zero/tools/goctl/rpc/generator"
 	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/core/errorx"
 )
 
 const templateParentPath = "/"

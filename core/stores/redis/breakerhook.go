@@ -4,8 +4,8 @@ import (
 	"context"
 
 	red "github.com/redis/go-redis/v9"
-	"github.com/zeromicro/go-zero/core/breaker"
-	"github.com/zeromicro/go-zero/core/lang"
+	"github.com/toby1991/go-zero/core/breaker"
+	"github.com/toby1991/go-zero/core/lang"
 )
 
 var ignoreCmds = map[string]lang.PlaceholderType{
