@@ -8,9 +8,9 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"github.com/toby1991/go-zero/core/logx"
+	"github.com/toby1991/go-zero/core/stringx"
 	"github.com/toby1991/go-zero/tools/goctl/rpc/execx"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 func TestRpcGenerate(t *testing.T) {

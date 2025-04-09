@@ -11,7 +11,7 @@ import (
 	"github.com/toby1991/go-zero/tools/goctl/api/util"
 	"github.com/toby1991/go-zero/tools/goctl/pkg/golang"
 	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/core/collection"
+	"github.com/toby1991/go-zero/core/collection"
 )
 
 type fileGenConfig struct {
@@ -59,16 +59,59 @@ func genFile(c fileGenConfig) error {
 
 func writeProperty(writer io.Writer, name, tag, comment string, tp spec.Type, indent int) error {
 	util.WriteIndent(writer, indent)
-	var err error
+	var (
+		err            error
+		isNestedStruct bool
+	)
+	structType, ok := tp.(spec.NestedStruct)
+	if ok {
+		isNestedStruct = true
+	}
 	if len(comment) > 0 {
 		comment = strings.TrimPrefix(comment, "//")
 		comment = "//" + comment
-		_, err = fmt.Fprintf(writer, "%s %s %s %s\n", strings.Title(name), tp.Name(), tag, comment)
-	} else {
-		_, err = fmt.Fprintf(writer, "%s %s %s\n", strings.Title(name), tp.Name(), tag)
 	}
 
-	return err
+	if isNestedStruct {
+		_, err = fmt.Fprintf(writer, "%s struct {\n", strings.Title(name))
+		if err != nil {
+			return err
+		}
+
+		if err := writeMember(writer, structType.Members); err != nil {
+			return err
+		}
+
+		_, err := fmt.Fprintf(writer, "} %s", tag)
+		if err != nil {
+			return err
+		}
+
+		if len(comment) > 0 {
+			_, err = fmt.Fprintf(writer, " %s", comment)
+			if err != nil {
+				return err
+			}
+		}
+		_, err = fmt.Fprint(writer, "\n")
+		if err != nil {
+			return err
+		}
+	} else {
+		if len(comment) > 0 {
+		_, err = fmt.Fprintf(writer, "%s %s %s %s\n", strings.Title(name), tp.Name(), tag, comment)
+			if err != nil {
+				return err
+			}
+	} else {
+		_, err = fmt.Fprintf(writer, "%s %s %s\n", strings.Title(name), tp.Name(), tag)
+			if err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }
 
 func getAuths(api *spec.ApiSpec) []string {

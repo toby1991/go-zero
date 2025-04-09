@@ -6,10 +6,10 @@ import (
 	"os"
 	"time"
 
+	"github.com/toby1991/go-zero/core/stringx"
 	"github.com/toby1991/go-zero/tools/goctl/rpc/execx"
 	"github.com/toby1991/go-zero/tools/goctl/util/console"
 	"github.com/toby1991/go-zero/tools/goctl/util/ctx"
-	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 const (

@@ -6,10 +6,10 @@ import (
 	"path/filepath"
 
 	"github.com/spf13/cobra"
+	"github.com/toby1991/go-zero/core/logx"
 	"github.com/toby1991/go-zero/tools/goctl/util/console"
 	"github.com/toby1991/go-zero/tools/goctl/util/ctx"
 	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 const baseDir = "greet"
@@ -56,12 +56,8 @@ func initProject() {
 	}
 
 	log.Must(pathx.MkdirIfNotExist(projectDir))
-	if hasGoMod, _ := ctx.IsGoMod(projectDir); hasGoMod {
-		return
-	}
-	if exitCode := execCommand(projectDir, "go mod init "+baseDir); exitCode != 0 {
-		log.Fatalln("Init process exit")
-	}
+	_, err = ctx.Prepare(projectDir)
+	logx.Must(err)
 }
 
 func run(_ *cobra.Command, _ []string) error {

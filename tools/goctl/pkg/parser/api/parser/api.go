@@ -5,16 +5,16 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/toby1991/go-zero/core/lang"
 	"github.com/toby1991/go-zero/tools/goctl/pkg/parser/api/ast"
 	"github.com/toby1991/go-zero/tools/goctl/pkg/parser/api/importstack"
 	"github.com/toby1991/go-zero/tools/goctl/pkg/parser/api/placeholder"
 	"github.com/toby1991/go-zero/tools/goctl/pkg/parser/api/token"
-	"github.com/zeromicro/go-zero/core/lang"
 )
 
 const (
-	atServerGroupKey  = "group:"
-	atServerPrefixKey = "prefix:"
+	atServerGroupKey  = "group"
+	atServerPrefixKey = "prefix"
 )
 
 // API is the parsed api file.
@@ -38,18 +38,24 @@ func convert2API(a *ast.AST, importSet map[string]lang.PlaceholderType, is *impo
 	syntax, ok := one.(*ast.SyntaxStmt)
 	if !ok {
 		syntax = &ast.SyntaxStmt{
-			Syntax: ast.NewTokenNode(token.Token{
+			Syntax: ast.NewTokenNode(
+				token.Token{
 				Type: token.IDENT,
 				Text: token.Syntax,
-			}),
-			Assign: ast.NewTokenNode(token.Token{
+				},
+			),
+			Assign: ast.NewTokenNode(
+				token.Token{
 				Type: token.ASSIGN,
 				Text: "=",
-			}),
-			Value: ast.NewTokenNode(token.Token{
+				},
+			),
+			Value: ast.NewTokenNode(
+				token.Token{
 				Type: token.STRING,
 				Text: `"v1"`,
-			}),
+				},
+			),
 		}
 	}
 
@@ -133,10 +139,14 @@ func (api *API) checkServiceStmt() error {
 		for _, item := range v.Routes {
 			handlerChecker.checkNodeWithPrefix(group, item.AtHandler.Name)
 			path := fmt.Sprintf("[%s]:%s", prefix, item.Route.Format(""))
-			pathChecker.check(ast.NewTokenNode(token.Token{
+			pathChecker.check(
+				ast.NewTokenNode(
+					token.Token{
 				Text:     path,
 				Position: item.Route.Pos(),
-			}))
+					},
+				),
+			)
 		}
 	}
 	return f.error()
@@ -237,7 +247,8 @@ func (api *API) getAtServerValue(atServer *ast.AtServerStmt, key string) string 
 
 func (api *API) mergeAPI(in *API) error {
 	if api.Syntax.Value.Format() != in.Syntax.Value.Format() {
-		return ast.SyntaxError(in.Syntax.Value.Pos(),
+		return ast.SyntaxError(
+			in.Syntax.Value.Pos(),
 			"multiple syntax value expression, expected <%s>, got <%s>",
 			api.Syntax.Value.Format(),
 			in.Syntax.Value.Format(),

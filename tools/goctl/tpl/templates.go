@@ -16,7 +16,7 @@ import (
 	modelgen "github.com/toby1991/go-zero/tools/goctl/model/sql/gen"
 	rpcgen "github.com/toby1991/go-zero/tools/goctl/rpc/generator"
 	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/core/errorx"
+	"github.com/toby1991/go-zero/core/errorx"
 )
 
 const templateParentPath = "/"

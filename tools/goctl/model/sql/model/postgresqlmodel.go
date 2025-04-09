@@ -4,12 +4,13 @@ import (
 	"database/sql"
 	"strings"
 
-	"github.com/zeromicro/go-zero/core/stores/sqlx"
+	"github.com/toby1991/go-zero/core/stores/sqlx"
 )
 
 var p2m = map[string]string{
 	"int8":        "bigint",
-	"numeric":     "bigint",
+	"numeric":     "double",
+	"decimal":     "double",
 	"float8":      "double",
 	"float4":      "float",
 	"int2":        "smallint",

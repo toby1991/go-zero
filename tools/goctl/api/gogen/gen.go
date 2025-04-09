@@ -13,6 +13,7 @@ import (
 
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
+	"github.com/toby1991/go-zero/core/logx"
 	apiformat "github.com/toby1991/go-zero/tools/goctl/api/format"
 	"github.com/toby1991/go-zero/tools/goctl/api/parser"
 	apiutil "github.com/toby1991/go-zero/tools/goctl/api/util"
@@ -20,7 +21,6 @@ import (
 	"github.com/toby1991/go-zero/tools/goctl/pkg/golang"
 	"github.com/toby1991/go-zero/tools/goctl/util"
 	"github.com/toby1991/go-zero/tools/goctl/util/pathx"
-	"github.com/zeromicro/go-zero/core/logx"
 )
 
 const tmpFile = "%s-%d"
@@ -39,6 +39,7 @@ var (
 	VarStringBranch string
 	// VarStringStyle describes the style of output files.
 	VarStringStyle string
+	VarBoolWithTest bool
 )
 
 // GoCommand gen go project files from command line
@@ -49,6 +50,7 @@ func GoCommand(_ *cobra.Command, _ []string) error {
 	home := VarStringHome
 	remote := VarStringRemote
 	branch := VarStringBranch
+	withTest := VarBoolWithTest
 	if len(remote) > 0 {
 		repo, _ := util.CloneIntoGitHome(remote, branch)
 		if len(repo) > 0 {
@@ -66,11 +68,11 @@ func GoCommand(_ *cobra.Command, _ []string) error {
 		return errors.New("missing -dir")
 	}
 
-	return DoGenProject(apiFile, dir, namingStyle)
+	return DoGenProject(apiFile, dir, namingStyle, withTest)
 }
 
 // DoGenProject gen go project files with api file
-func DoGenProject(apiFile, dir, style string) error {
+func DoGenProject(apiFile, dir, style string, withTest bool) error {
 	api, err := parser.Parse(apiFile)
 	if err != nil {
 		return err
@@ -100,6 +102,10 @@ func DoGenProject(apiFile, dir, style string) error {
 	logx.Must(genHandlers(dir, rootPkg, cfg, api))
 	logx.Must(genLogic(dir, rootPkg, cfg, api))
 	logx.Must(genMiddleware(dir, cfg, api))
+	if withTest {
+		logx.Must(genHandlersTest(dir, rootPkg, cfg, api))
+		logx.Must(genLogicTest(dir, rootPkg, cfg, api))
+	}
 
 	if err := backupAndSweep(apiFile); err != nil {
 		return err

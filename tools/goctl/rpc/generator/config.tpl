@@ -3,7 +3,7 @@ package config
 import (
     "github.com/toby1991/go-zero-utils/db"
     "github.com/toby1991/go-zero-utils/bizredis"
-	"github.com/toby1991/go-zero-utils/bizmemory"
+    "github.com/toby1991/go-zero-utils/bizmemory"
     "github.com/toby1991/go-zero-utils/queue/faktory"
     "github.com/toby1991/go-zero-utils/queue/nsq"
     "github.com/zeromicro/go-zero/zrpc"

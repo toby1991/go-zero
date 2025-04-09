@@ -14,11 +14,13 @@ import (
 )
 
 func Test_Parse(t *testing.T) {
-	t.Run("valid", func(t *testing.T) {
+	t.Run(
+		"valid", func(t *testing.T) {
 		apiSpec, err := Parse("./testdata/example.api", nil)
 		assert.Nil(t, err)
 		ast := assert.New(t)
-		ast.Equal(spec.Info{
+			ast.Equal(
+				spec.Info{
 			Title:   "type title here",
 			Desc:    "type desc here",
 			Version: "type version here",
@@ -31,8 +33,10 @@ func Test_Parse(t *testing.T) {
 				"author":  "type author here",
 				"email":   "type email here",
 			},
-		}, apiSpec.Info)
-		ast.True(func() bool {
+				}, apiSpec.Info,
+			)
+			ast.True(
+				func() bool {
 			for _, group := range apiSpec.Service.Groups {
 				value, ok := group.Annotation.Properties["summary"]
 				if ok {
@@ -40,10 +44,13 @@ func Test_Parse(t *testing.T) {
 				}
 			}
 			return false
-		}())
-	})
+				}(),
+			)
+		},
+	)
 
-	t.Run("invalid", func(t *testing.T) {
+	t.Run(
+		"invalid", func(t *testing.T) {
 		data, err := os.ReadFile("./testdata/invalid.api")
 		assert.NoError(t, err)
 		splits := bytes.Split(data, []byte("-----"))
@@ -63,20 +70,41 @@ func Test_Parse(t *testing.T) {
 			_, err := Parse(v, nil)
 			assertx.Error(t, err)
 		}
-	})
+		},
+	)
 
-	t.Run("circleImport", func(t *testing.T) {
+	t.Run(
+		"circleImport", func(t *testing.T) {
 		_, err := Parse("./testdata/base.api", nil)
 		assertx.Error(t, err)
-	})
+		},
+	)
 
-	t.Run("link_import", func(t *testing.T) {
+	t.Run(
+		"link_import", func(t *testing.T) {
 		_, err := Parse("./testdata/link_import.api", nil)
 		assert.Nil(t, err)
-	})
+		},
+	)
 
-	t.Run("duplicate_types", func(t *testing.T) {
+	t.Run(
+		"duplicate_types", func(t *testing.T) {
 		_, err := Parse("./testdata/duplicate_type.api", nil)
 		assertx.Error(t, err)
-	})
+		},
+	)
+
+	t.Run(
+		"duplicate_path_expression", func(t *testing.T) {
+			_, err := Parse("./testdata/duplicate_path_expression.api", nil)
+			assertx.Error(t, err)
+		},
+	)
+	t.Run(
+		"duplicate_path_expression_different_prefix", func(t *testing.T) {
+			_, err := Parse("./testdata/duplicate_path_expression_different_prefix.api", nil)
+
+			assert.Nil(t, err)
+		},
+	)
 }
