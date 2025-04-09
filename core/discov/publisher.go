@@ -3,13 +3,13 @@ package discov
 import (
 	"time"
 
-	"github.com/zeromicro/go-zero/core/discov/internal"
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/proc"
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/core/threading"
+	"github.com/toby1991/go-zero/core/discov/internal"
+	"github.com/toby1991/go-zero/core/lang"
+	"github.com/toby1991/go-zero/core/logc"
+	"github.com/toby1991/go-zero/core/logx"
+	"github.com/toby1991/go-zero/core/proc"
+	"github.com/toby1991/go-zero/core/syncx"
+	"github.com/toby1991/go-zero/core/threading"
 	clientv3 "go.etcd.io/etcd/client/v3"
 )
 
