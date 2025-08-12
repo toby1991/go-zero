@@ -28,6 +28,14 @@ func (m *default{{.serviceName}}) {{.method}}(ctx context.Context{{if .hasReq}},
 	return client.{{.method}}(ctx{{if .hasReq}}, in{{end}}, opts...)
 }
 `
+
+	callDirectFunctionTemplate = `
+{{if .hasComment}}{{.comment}}{{end}}
+func (l *direct{{.serviceName}}) {{.method}}(ctx context.Context{{if .hasReq}}, in *{{.pbRequest}}{{end}}, opts ...grpc.CallOption) ({{if .notStream}}*{{.pbResponse}}, {{else}}{{.streamBody}},{{end}} error) {
+	logicInstance := logic.New{{.method}}Logic(ctx, l.svcCtx)
+	return logicInstance.{{.method}}({{if .hasReq}}in{{end}})
+}
+`
 )
 
 //go:embed call.tpl
@@ -90,6 +98,11 @@ func (g *Generator) genCallGroup(ctx DirContext, proto parser.Proto, cfg *conf.C
 			return err
 		}
 
+		directFunctions, err := g.genDirectFunction(serviceName, service)
+		if err != nil {
+			return err
+		}
+
 		text, err := pathx.LoadTemplate(category, callTemplateFile, callTemplateText)
 		if err != nil {
 			return err
@@ -102,18 +115,24 @@ func (g *Generator) genCallGroup(ctx DirContext, proto parser.Proto, cfg *conf.C
 			protoGoPackage = ""
 		}
 
+		internalLogicPackage := fmt.Sprintf(`"%s"`, ctx.GetLogic().Package)
+		internalSvcPackage := fmt.Sprintf(`"%s"`, ctx.GetSvc().Package)
+
 		aliasKeys := alias.KeysStr()
 		sort.Strings(aliasKeys)
 		if err = util.With("shared").GoFmt(true).Parse(text).SaveTo(map[string]any{
-			"name":           callFilename,
-			"alias":          strings.Join(aliasKeys, pathx.NL),
-			"head":           head,
-			"filePackage":    childDir,
-			"pbPackage":      pbPackage,
-			"protoGoPackage": protoGoPackage,
-			"serviceName":    serviceName,
-			"functions":      strings.Join(functions, pathx.NL),
-			"interface":      strings.Join(iFunctions, pathx.NL),
+			"name":                  callFilename,
+			"alias":                 strings.Join(aliasKeys, pathx.NL),
+			"head":                  head,
+			"filePackage":           childDir,
+			"pbPackage":             pbPackage,
+			"protoGoPackage":        protoGoPackage,
+			"serviceName":           serviceName,
+			"functions":             strings.Join(functions, pathx.NL),
+			"interface":             strings.Join(iFunctions, pathx.NL),
+			"directFunctions":       strings.Join(directFunctions, pathx.NL),
+			"internalLogicPackage":  internalLogicPackage,
+			"internalSvcPackage":    internalSvcPackage,
 		}, filename, true); err != nil {
 			return err
 		}
@@ -163,6 +182,11 @@ func (g *Generator) genCallInCompatibility(ctx DirContext, proto parser.Proto,
 		return err
 	}
 
+	directFunctions, err := g.genDirectFunction(serviceName, service)
+	if err != nil {
+		return err
+	}
+
 	text, err := pathx.LoadTemplate(category, callTemplateFile, callTemplateText)
 	if err != nil {
 		return err
@@ -174,18 +198,25 @@ func (g *Generator) genCallInCompatibility(ctx DirContext, proto parser.Proto,
 		pbPackage = ""
 		protoGoPackage = ""
 	}
+
+	internalLogicPackage := fmt.Sprintf(`"%s"`, ctx.GetLogic().Package)
+	internalSvcPackage := fmt.Sprintf(`"%s"`, ctx.GetSvc().Package)
+
 	aliasKeys := alias.KeysStr()
 	sort.Strings(aliasKeys)
 	return util.With("shared").GoFmt(true).Parse(text).SaveTo(map[string]any{
-		"name":           callFilename,
-		"alias":          strings.Join(aliasKeys, pathx.NL),
-		"head":           head,
-		"filePackage":    dir.Base,
-		"pbPackage":      pbPackage,
-		"protoGoPackage": protoGoPackage,
-		"serviceName":    serviceName,
-		"functions":      strings.Join(functions, pathx.NL),
-		"interface":      strings.Join(iFunctions, pathx.NL),
+		"name":                  callFilename,
+		"alias":                 strings.Join(aliasKeys, pathx.NL),
+		"head":                  head,
+		"filePackage":           dir.Base,
+		"pbPackage":             pbPackage,
+		"protoGoPackage":        protoGoPackage,
+		"serviceName":           serviceName,
+		"functions":             strings.Join(functions, pathx.NL),
+		"interface":             strings.Join(iFunctions, pathx.NL),
+		"directFunctions":       strings.Join(directFunctions, pathx.NL),
+		"internalLogicPackage":  internalLogicPackage,
+		"internalSvcPackage":    internalSvcPackage,
 	}, filename, true)
 }
 
@@ -281,6 +312,39 @@ func (g *Generator) getInterfaceFuncs(goPackage string, service parser.Service,
 				"pbResponse": parser.CamelCase(rpc.ReturnsType),
 				"streamBody": streamServer,
 			})
+		if err != nil {
+			return nil, err
+		}
+
+		functions = append(functions, buffer.String())
+	}
+
+	return functions, nil
+}
+
+func (g *Generator) genDirectFunction(serviceName string, service parser.Service) ([]string, error) {
+	functions := make([]string, 0)
+
+	for _, rpc := range service.RPC {
+		text, err := pathx.LoadTemplate(category, "callDirectFunctionTemplateFile", callDirectFunctionTemplate)
+		if err != nil {
+			return nil, err
+		}
+
+		comment := parser.GetComment(rpc.Doc())
+		streamServer := fmt.Sprintf("%s_%s%s", parser.CamelCase(service.Name),
+			parser.CamelCase(rpc.Name), "Client")
+		buffer, err := util.With("directFn").Parse(text).Execute(map[string]any{
+			"serviceName": serviceName,
+			"method":      parser.CamelCase(rpc.Name),
+			"pbRequest":   parser.CamelCase(rpc.RequestType),
+			"pbResponse":  parser.CamelCase(rpc.ReturnsType),
+			"hasComment":  len(comment) > 0,
+			"comment":     comment,
+			"hasReq":      !rpc.StreamsRequest,
+			"notStream":   !rpc.StreamsRequest && !rpc.StreamsReturns,
+			"streamBody":  streamServer,
+		})
 		if err != nil {
 			return nil, err
 		}

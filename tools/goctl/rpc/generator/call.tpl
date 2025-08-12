@@ -7,6 +7,8 @@ import (
 
 	{{.pbPackage}}
 	{{if ne .pbPackage .protoGoPackage}}{{.protoGoPackage}}{{end}}
+	{{.internalLogicPackage}}
+	{{.internalSvcPackage}}
 
 	"github.com/toby1991/go-zero/zrpc"
 	"google.golang.org/grpc"
@@ -22,6 +24,10 @@ type (
 	default{{.serviceName}} struct {
 		cli zrpc.Client
 	}
+
+	direct{{.serviceName}} struct {
+		svcCtx *svc.ServiceContext
+	}
 )
 
 func New{{.serviceName}}(cli zrpc.Client) {{.serviceName}} {
@@ -30,4 +36,12 @@ func New{{.serviceName}}(cli zrpc.Client) {{.serviceName}} {
 	}
 }
 
+func NewDirect{{.serviceName}}(svcCtx *svc.ServiceContext) {{.serviceName}} {
+	return &direct{{.serviceName}}{
+		svcCtx: svcCtx,
+	}
+}
+
 {{.functions}}
+
+{{.directFunctions}}
