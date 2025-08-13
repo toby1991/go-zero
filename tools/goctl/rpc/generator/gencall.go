@@ -117,22 +117,24 @@ func (g *Generator) genCallGroup(ctx DirContext, proto parser.Proto, cfg *conf.C
 
 		internalLogicPackage := fmt.Sprintf(`"%s"`, ctx.GetLogic().Package)
 		internalSvcPackage := fmt.Sprintf(`"%s"`, ctx.GetSvc().Package)
+		internalConfigPackage := fmt.Sprintf(`"%s"`, ctx.GetConfig().Package)
 
 		aliasKeys := alias.KeysStr()
 		sort.Strings(aliasKeys)
 		if err = util.With("shared").GoFmt(true).Parse(text).SaveTo(map[string]any{
-			"name":                  callFilename,
-			"alias":                 strings.Join(aliasKeys, pathx.NL),
-			"head":                  head,
-			"filePackage":           childDir,
-			"pbPackage":             pbPackage,
-			"protoGoPackage":        protoGoPackage,
-			"serviceName":           serviceName,
-			"functions":             strings.Join(functions, pathx.NL),
-			"interface":             strings.Join(iFunctions, pathx.NL),
-			"directFunctions":       strings.Join(directFunctions, pathx.NL),
-			"internalLogicPackage":  internalLogicPackage,
-			"internalSvcPackage":    internalSvcPackage,
+			"name":                   callFilename,
+			"alias":                  strings.Join(aliasKeys, pathx.NL),
+			"head":                   head,
+			"filePackage":            childDir,
+			"pbPackage":              pbPackage,
+			"protoGoPackage":         protoGoPackage,
+			"serviceName":            serviceName,
+			"functions":              strings.Join(functions, pathx.NL),
+			"interface":              strings.Join(iFunctions, pathx.NL),
+			"directFunctions":        strings.Join(directFunctions, pathx.NL),
+			"internalLogicPackage":   internalLogicPackage,
+			"internalSvcPackage":     internalSvcPackage,
+			"internalConfigPackage":  internalConfigPackage,
 		}, filename, true); err != nil {
 			return err
 		}
@@ -201,22 +203,24 @@ func (g *Generator) genCallInCompatibility(ctx DirContext, proto parser.Proto,
 
 	internalLogicPackage := fmt.Sprintf(`"%s"`, ctx.GetLogic().Package)
 	internalSvcPackage := fmt.Sprintf(`"%s"`, ctx.GetSvc().Package)
+	internalConfigPackage := fmt.Sprintf(`"%s"`, ctx.GetConfig().Package)
 
 	aliasKeys := alias.KeysStr()
 	sort.Strings(aliasKeys)
 	return util.With("shared").GoFmt(true).Parse(text).SaveTo(map[string]any{
-		"name":                  callFilename,
-		"alias":                 strings.Join(aliasKeys, pathx.NL),
-		"head":                  head,
-		"filePackage":           dir.Base,
-		"pbPackage":             pbPackage,
-		"protoGoPackage":        protoGoPackage,
-		"serviceName":           serviceName,
-		"functions":             strings.Join(functions, pathx.NL),
-		"interface":             strings.Join(iFunctions, pathx.NL),
-		"directFunctions":       strings.Join(directFunctions, pathx.NL),
-		"internalLogicPackage":  internalLogicPackage,
-		"internalSvcPackage":    internalSvcPackage,
+		"name":                   callFilename,
+		"alias":                  strings.Join(aliasKeys, pathx.NL),
+		"head":                   head,
+		"filePackage":            dir.Base,
+		"pbPackage":              pbPackage,
+		"protoGoPackage":         protoGoPackage,
+		"serviceName":            serviceName,
+		"functions":              strings.Join(functions, pathx.NL),
+		"interface":              strings.Join(iFunctions, pathx.NL),
+		"directFunctions":        strings.Join(directFunctions, pathx.NL),
+		"internalLogicPackage":   internalLogicPackage,
+		"internalSvcPackage":     internalSvcPackage,
+		"internalConfigPackage":  internalConfigPackage,
 	}, filename, true)
 }
 

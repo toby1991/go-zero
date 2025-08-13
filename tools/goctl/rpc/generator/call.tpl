@@ -9,7 +9,9 @@ import (
 	{{if ne .pbPackage .protoGoPackage}}{{.protoGoPackage}}{{end}}
 	{{.internalLogicPackage}}
 	{{.internalSvcPackage}}
+	{{.internalConfigPackage}}
 
+	"github.com/toby1991/go-zero/core/conf"
 	"github.com/toby1991/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
@@ -36,9 +38,11 @@ func New{{.serviceName}}(cli zrpc.Client) {{.serviceName}} {
 	}
 }
 
-func NewDirect{{.serviceName}}(svcCtx *svc.ServiceContext) {{.serviceName}} {
+func NewDirect{{.serviceName}}(configPath string) {{.serviceName}} {
+	var c config.Config
+	conf.MustLoad(configPath, &c)
 	return &direct{{.serviceName}}{
-		svcCtx: svcCtx,
+		svcCtx: svc.NewServiceContext(c),
 	}
 }
 
