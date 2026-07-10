@@ -6,7 +6,7 @@ import (
 	"strings"
 	"unicode"
 
-	"github.com/zeromicro/go-zero/core/lang"
+	"github.com/toby1991/go-zero/core/lang"
 )
 
 var (

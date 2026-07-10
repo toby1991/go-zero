@@ -9,7 +9,7 @@ import (
 	"sync"
 	"sync/atomic"
 
-	"github.com/zeromicro/go-zero/core/errorx"
+	"github.com/toby1991/go-zero/core/errorx"
 )
 
 const (

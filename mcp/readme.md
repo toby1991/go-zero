@@ -22,7 +22,7 @@ This package provides a go-zero integration for the [Model Context Protocol (MCP
 ### 1. Installation
 
 ```bash
-go get github.com/zeromicro/go-zero
+go get github.com/toby1991/go-zero
 ```
 
 **Note**: The official MCP SDK is a transitive dependency and will be installed automatically. You don't need to import it directly in your code.
@@ -56,8 +56,8 @@ import (
 	"context"
 	"log"
 
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/mcp"
+	"github.com/toby1991/go-zero/core/conf"
+	"github.com/toby1991/go-zero/mcp"
 )
 
 type GreetArgs struct {

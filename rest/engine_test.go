@@ -13,10 +13,10 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/core/fs"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/rest/router"
+	"github.com/toby1991/go-zero/core/conf"
+	"github.com/toby1991/go-zero/core/fs"
+	"github.com/toby1991/go-zero/core/logx"
+	"github.com/toby1991/go-zero/rest/router"
 )
 
 const (

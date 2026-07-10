@@ -8,10 +8,10 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/stringx"
-	"github.com/zeromicro/go-zero/core/syncx"
-	"github.com/zeromicro/go-zero/core/timex"
+	"github.com/toby1991/go-zero/core/lang"
+	"github.com/toby1991/go-zero/core/stringx"
+	"github.com/toby1991/go-zero/core/syncx"
+	"github.com/toby1991/go-zero/core/timex"
 )
 
 const (
@@ -630,7 +630,7 @@ func TestMoveAndRemoveTask(t *testing.T) {
 }
 
 // TestTimingWheel_DrainClosureBug tests the closure capture bug in drainAll
-// Issue: https://github.com/zeromicro/go-zero/issues/5314
+// Issue: https://github.com/toby1991/go-zero/issues/5314
 func TestTimingWheel_DrainClosureBug(t *testing.T) {
 	ticker := timex.NewFakeTicker()
 	tw, _ := NewTimingWheelWithTicker(testStep, 10, func(k, v any) {}, ticker)
@@ -668,7 +668,7 @@ func TestTimingWheel_DrainClosureBug(t *testing.T) {
 }
 
 // TestTimingWheel_RunTasksClosureBug tests the closure capture bug in runTasks
-// Issue: https://github.com/zeromicro/go-zero/issues/5314
+// Issue: https://github.com/toby1991/go-zero/issues/5314
 func TestTimingWheel_RunTasksClosureBug(t *testing.T) {
 	ticker := timex.NewFakeTicker()
 	var mu sync.Mutex

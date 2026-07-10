@@ -4,11 +4,11 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	zconf "github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/core/discov"
-	"github.com/zeromicro/go-zero/core/service"
-	"github.com/zeromicro/go-zero/core/stores/redis"
-	"github.com/zeromicro/go-zero/zrpc/internal/balancer/p2c"
+	zconf "github.com/toby1991/go-zero/core/conf"
+	"github.com/toby1991/go-zero/core/discov"
+	"github.com/toby1991/go-zero/core/service"
+	"github.com/toby1991/go-zero/core/stores/redis"
+	"github.com/toby1991/go-zero/zrpc/internal/balancer/p2c"
 )
 
 func TestRpcClientConf(t *testing.T) {

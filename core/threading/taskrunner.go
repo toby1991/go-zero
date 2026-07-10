@@ -4,8 +4,8 @@ import (
 	"errors"
 	"sync"
 
-	"github.com/zeromicro/go-zero/core/lang"
-	"github.com/zeromicro/go-zero/core/rescue"
+	"github.com/toby1991/go-zero/core/lang"
+	"github.com/toby1991/go-zero/core/rescue"
 )
 
 // ErrTaskRunnerBusy is the error that indicates the runner is busy.

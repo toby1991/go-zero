@@ -7,8 +7,8 @@ import (
 
 	"github.com/grafana/pyroscope-go"
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/core/conf"
-	"github.com/zeromicro/go-zero/core/syncx"
+	"github.com/toby1991/go-zero/core/conf"
+	"github.com/toby1991/go-zero/core/syncx"
 )
 
 func TestStart(t *testing.T) {

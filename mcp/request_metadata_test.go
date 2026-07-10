@@ -7,7 +7,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/rest/pathvar"
+	"github.com/toby1991/go-zero/rest/pathvar"
 )
 
 func TestDefaultRequestMetadataExtractor(t *testing.T) {

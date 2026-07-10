@@ -1,8 +1,8 @@
 package gateway
 
 import (
-	"github.com/zeromicro/go-zero/rest"
-	"github.com/zeromicro/go-zero/zrpc"
+	"github.com/toby1991/go-zero/rest"
+	"github.com/toby1991/go-zero/zrpc"
 )
 
 type (

@@ -8,9 +8,9 @@ import (
     "fmt"
 	"net/http"
 
-    "github.com/zeromicro/go-zero/core/logc"
-    "github.com/zeromicro/go-zero/core/threading"
-	{{if .HasRequest}}"github.com/zeromicro/go-zero/rest/httpx"{{end}}
+    "github.com/toby1991/go-zero/core/logc"
+    "github.com/toby1991/go-zero/core/threading"
+	{{if .HasRequest}}"github.com/toby1991/go-zero/rest/httpx"{{end}}
 	{{.ImportPackages}}
 )
 

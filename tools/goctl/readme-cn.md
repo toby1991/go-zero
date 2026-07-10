@@ -6,7 +6,7 @@ goctl 使用见文档 https://go-zero.dev/docs/tutorials/cli/overview
 
 ```shell
 # 安装工具
-go install github.com/zeromicro/go-zero/tools/goctl@v1.10.1-utils.0
+go install github.com/toby1991/go-zero/tools/goctl@v1.10.1-utils.0
 
 # 创建项目
 mkdir user

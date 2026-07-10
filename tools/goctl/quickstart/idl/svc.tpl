@@ -2,7 +2,7 @@ package svc
 
 import (
 	"{{.configPkg}}"{{if .callRPC}}
-	"github.com/zeromicro/go-zero/zrpc"
+	"github.com/toby1991/go-zero/zrpc"
 	"{{.rpcClientPkg}}"{{end}}
 )
 

@@ -12,15 +12,15 @@
   "info": {
     "description": "Generating Swagger files using the API demo.",
     "title": "Demo API",
-    "termsOfService": "https://github.com/zeromicro/go-zero",
+    "termsOfService": "https://github.com/toby1991/go-zero",
     "contact": {
       "name": "keson.an",
-      "url": "https://github.com/zeromicro/go-zero",
+      "url": "https://github.com/toby1991/go-zero",
       "email": "example@gmail.com"
     },
     "license": {
       "name": "MIT",
-      "url": "https://github.com/zeromicro/go-zero"
+      "url": "https://github.com/toby1991/go-zero"
     },
     "version": "v1"
   },
@@ -4974,7 +4974,7 @@
   },
   "x-date": "2025-05-10 21:16:52",
   "x-description": "This is a goctl generated swagger file.",
-  "x-github": "https://github.com/zeromicro/go-zero",
+  "x-github": "https://github.com/toby1991/go-zero",
   "x-go-zero-doc": "https://go-zero.dev/",
   "x-goctl-version": "1.8.4-alpha"
 }

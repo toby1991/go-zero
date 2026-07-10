@@ -8,7 +8,7 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/toby1991/go-zero/core/logx"
 )
 
 const (

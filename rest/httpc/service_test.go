@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/zeromicro/go-zero/rest/internal/header"
+	"github.com/toby1991/go-zero/rest/internal/header"
 )
 
 func TestNamedService_DoRequest(t *testing.T) {

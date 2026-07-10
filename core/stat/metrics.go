@@ -5,9 +5,9 @@ import (
 	"sync"
 	"time"
 
-	"github.com/zeromicro/go-zero/core/executors"
-	"github.com/zeromicro/go-zero/core/logx"
-	"github.com/zeromicro/go-zero/core/syncx"
+	"github.com/toby1991/go-zero/core/executors"
+	"github.com/toby1991/go-zero/core/logx"
+	"github.com/toby1991/go-zero/core/syncx"
 )
 
 var (

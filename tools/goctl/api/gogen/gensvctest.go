@@ -3,10 +3,10 @@ package gogen
 import (
 	_ "embed"
 
-	"github.com/zeromicro/go-zero/tools/goctl/api/spec"
-	"github.com/zeromicro/go-zero/tools/goctl/config"
-	"github.com/zeromicro/go-zero/tools/goctl/internal/version"
-	"github.com/zeromicro/go-zero/tools/goctl/util/format"
+	"github.com/toby1991/go-zero/tools/goctl/api/spec"
+	"github.com/toby1991/go-zero/tools/goctl/config"
+	"github.com/toby1991/go-zero/tools/goctl/internal/version"
+	"github.com/toby1991/go-zero/tools/goctl/util/format"
 )
 
 //go:embed svc_test.tpl

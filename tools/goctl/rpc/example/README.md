@@ -26,7 +26,7 @@ Each example includes:
 - [Go](https://go.dev/) 1.22+
 - [protoc](https://github.com/protocolbuffers/protobuf/releases) (Protocol Buffers compiler)
 - [protoc-gen-go](https://pkg.go.dev/google.golang.org/protobuf/cmd/protoc-gen-go) and [protoc-gen-go-grpc](https://pkg.go.dev/google.golang.org/grpc/cmd/protoc-gen-go-grpc)
-- [goctl](https://github.com/zeromicro/go-zero/tree/master/tools/goctl)
+- [goctl](https://github.com/toby1991/go-zero/tree/master/tools/goctl)
 
 ## Quick Start
 
@@ -74,7 +74,7 @@ goctl rpc protoc greeter.proto \
 - [Go](https://go.dev/) 1.22+
 - [protoc](https://github.com/protocolbuffers/protobuf/releases)（Protocol Buffers 编译器）
 - [protoc-gen-go](https://pkg.go.dev/google.golang.org/protobuf/cmd/protoc-gen-go) 和 [protoc-gen-go-grpc](https://pkg.go.dev/google.golang.org/grpc/cmd/protoc-gen-go-grpc)
-- [goctl](https://github.com/zeromicro/go-zero/tree/master/tools/goctl)
+- [goctl](https://github.com/toby1991/go-zero/tree/master/tools/goctl)
 
 ## 快速开始
 

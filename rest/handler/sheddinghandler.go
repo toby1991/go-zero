@@ -4,11 +4,11 @@ import (
 	"net/http"
 	"sync"
 
-	"github.com/zeromicro/go-zero/core/load"
-	"github.com/zeromicro/go-zero/core/logc"
-	"github.com/zeromicro/go-zero/core/stat"
-	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero/rest/internal/response"
+	"github.com/toby1991/go-zero/core/load"
+	"github.com/toby1991/go-zero/core/logc"
+	"github.com/toby1991/go-zero/core/stat"
+	"github.com/toby1991/go-zero/rest/httpx"
+	"github.com/toby1991/go-zero/rest/internal/response"
 )
 
 const serviceType = "api"
