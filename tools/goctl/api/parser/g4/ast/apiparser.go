@@ -7,9 +7,9 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/zeromicro/antlr"
 	"github.com/zeromicro/go-zero/tools/goctl/api/parser/g4/gen/api"
 	"github.com/zeromicro/go-zero/tools/goctl/util/console"
-	"github.com/zeromicro/antlr"
 )
 
 type (
@@ -28,7 +28,7 @@ type (
 		syntax                   *SyntaxExpr
 	}
 
-	// ParserOption defines an function with argument Parser
+	// ParserOption defines a function with argument Parser
 	ParserOption func(p *Parser)
 )
 

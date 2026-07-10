@@ -1,10 +1,13 @@
+// Code scaffolded by goctl. Safe to edit.
+// goctl {{.version}}
+
 package {{.PkgName}}
 
 import (
 	"net/http"
 
 	"github.com/zeromicro/go-zero/rest/httpx"
-	"github.com/zeromicro/go-zero-utils/api"
+	"github.com/toby1991/go-zero-utils/api"
 	{{.ImportPackages}}
 )
 

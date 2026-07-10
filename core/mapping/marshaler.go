@@ -3,6 +3,7 @@ package mapping
 import (
 	"fmt"
 	"reflect"
+	"slices"
 	"strings"
 )
 
@@ -142,7 +143,7 @@ func validateOptional(field reflect.StructField, value reflect.Value) error {
 		if value.IsNil() {
 			return fmt.Errorf("field %q is nil", field.Name)
 		}
-	case reflect.Array, reflect.Slice, reflect.Map:
+	case reflect.Slice, reflect.Map:
 		if value.IsNil() || value.Len() == 0 {
 			return fmt.Errorf("field %q is empty", field.Name)
 		}
@@ -152,15 +153,8 @@ func validateOptional(field reflect.StructField, value reflect.Value) error {
 }
 
 func validateOptions(value reflect.Value, opt *fieldOptions) error {
-	var found bool
 	val := fmt.Sprint(value.Interface())
-	for i := range opt.Options {
-		if opt.Options[i] == val {
-			found = true
-			break
-		}
-	}
-	if !found {
+	if !slices.Contains(opt.Options, val) {
 		return fmt.Errorf("field %q not in options", val)
 	}
 

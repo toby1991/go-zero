@@ -1,9 +1,12 @@
+// Code scaffolded by goctl. Safe to edit.
+// goctl {{.version}}
+
 package main
 
 import (
 	"flag"
 	"fmt"
-	"github.com/zeromicro/go-zero-utils/pprof"
+	"github.com/toby1991/go-zero-utils/pprof"
 	"github.com/zeromicro/go-zero/core/service"
 
 	{{.importPackages}}

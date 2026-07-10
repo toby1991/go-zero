@@ -3,10 +3,10 @@ package generator
 import (
 	_ "embed"
 	"fmt"
-	"github.com/zeromicro/go-zero/core/collection"
 	"path/filepath"
 	"strings"
 
+	"github.com/zeromicro/go-zero/core/collection"
 	conf "github.com/zeromicro/go-zero/tools/goctl/config"
 	"github.com/zeromicro/go-zero/tools/goctl/rpc/parser"
 	"github.com/zeromicro/go-zero/tools/goctl/util"
@@ -32,17 +32,16 @@ func (g *Generator) GenSvc(ctx DirContext, _ parser.Proto, cfg *conf.Config) err
 		return err
 	}
 
-	configImport := fmt.Sprintf(`"%v"`, ctx.GetConfig().Package)
-	entImport := fmt.Sprintf(`"%v"`, ctx.GetEnt().Package)
-	entMigrateImport := fmt.Sprintf(`"%v"`, pathx.JoinPackages(ctx.GetEnt().Package, "migrate"))
-	entInterceptImport := fmt.Sprintf(`"%v"`, pathx.JoinPackages(ctx.GetEnt().Package, "intercept"))
-	entRuntimeImport := fmt.Sprintf(`_ "%v"`, pathx.JoinPackages(ctx.GetEnt().Package, "runtime"))
-
-	imports := collection.NewSet()
-	imports.AddStr(configImport, entImport, entMigrateImport, entInterceptImport, entRuntimeImport)
+	imports := collection.NewSet[string]()
+	imports.Add(
+		fmt.Sprintf(`"%v"`, ctx.GetConfig().Package),
+		fmt.Sprintf(`"%v"`, ctx.GetEnt().Package),
+		fmt.Sprintf(`"%v"`, pathx.JoinPackages(ctx.GetEnt().Package, "intercept")),
+		fmt.Sprintf(`"%v"`, pathx.JoinPackages(ctx.GetEnt().Package, "migrate")),
+		fmt.Sprintf(`_ "%v"`, pathx.JoinPackages(ctx.GetEnt().Package, "runtime")),
+	)
 
 	return util.With("svc").GoFmt(true).Parse(text).SaveTo(map[string]any{
-		//"imports": fmt.Sprintf(`"%v"`, ctx.GetConfig().Package),
-		"imports": strings.Join(imports.KeysStr(), pathx.NL),
+		"imports": strings.Join(imports.Keys(), pathx.NL),
 	}, fileName, false)
 }

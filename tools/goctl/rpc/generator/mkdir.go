@@ -148,8 +148,9 @@ func mkdir(ctx *ctx.ProjectContext, proto parser.Proto, conf *conf.Config, c *ZR
 	}
 	inner[thirdPartyPb] = Dir{
 		Filename: thirdPartyPbDir,
-		Package:  filepath.ToSlash(filepath.Join(ctx.Path, strings.TrimPrefix(thirdPartyPbDir, ctx.Dir))),
-		Base:     filepath.Base(thirdPartyPbDir),
+		Package: filepath.ToSlash(filepath.Join(ctx.Path,
+			strings.TrimPrefix(thirdPartyPbDir, ctx.Dir))),
+		Base: filepath.Base(thirdPartyPbDir),
 		GetChildPackage: func(childPath string) (string, error) {
 			return getChildPackage(thirdPartyPbDir, childPath)
 		},
@@ -221,7 +222,9 @@ func mkdir(ctx *ctx.ProjectContext, proto parser.Proto, conf *conf.Config, c *ZR
 			return nil, err
 		}
 	}
-	serviceName := strings.TrimSuffix(proto.Name, filepath.Ext(proto.Name))
+
+	serviceName := determineServiceName(proto, c)
+
 	return &defaultDirContext{
 		ctx:         ctx,
 		inner:       inner,
@@ -299,4 +302,17 @@ func (d *defaultDirContext) GetServiceName() stringx.String {
 // Valid returns true if the directory is valid
 func (d *Dir) Valid() bool {
 	return len(d.Filename) > 0 && len(d.Package) > 0
+}
+
+// determineServiceName returns the service name based on the proto file and context.
+// By default, it uses the proto package name (supports multi-proto files).
+// Falls back to filename if --name-from-filename flag is set or package name is empty.
+func determineServiceName(proto parser.Proto, c *ZRpcContext) string {
+	if c != nil && c.NameFromFilename {
+		return strings.TrimSuffix(proto.Name, filepath.Ext(proto.Name))
+	}
+	if proto.Package.Package != nil && len(proto.Package.Name) > 0 {
+		return proto.Package.Name
+	}
+	return strings.TrimSuffix(proto.Name, filepath.Ext(proto.Name))
 }

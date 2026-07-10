@@ -7,6 +7,7 @@ import (
 
 	{{.pbPackage}}
 	{{if ne .pbPackage .protoGoPackage}}{{.protoGoPackage}}{{end}}
+	{{.extraImports}}
 	{{.internalLogicPackage}}
 	{{.internalSvcPackage}}
 	{{.internalConfigPackage}}

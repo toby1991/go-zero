@@ -10,6 +10,7 @@ import (
 
 	"github.com/gookit/color"
 	"github.com/spf13/cobra"
+	"github.com/withfig/autocomplete-tools/integrations/cobra"
 	"github.com/zeromicro/go-zero/tools/goctl/api"
 	"github.com/zeromicro/go-zero/tools/goctl/bug"
 	"github.com/zeromicro/go-zero/tools/goctl/config"
@@ -25,7 +26,6 @@ import (
 	"github.com/zeromicro/go-zero/tools/goctl/rpc"
 	"github.com/zeromicro/go-zero/tools/goctl/tpl"
 	"github.com/zeromicro/go-zero/tools/goctl/upgrade"
-	"github.com/withfig/autocomplete-tools/integrations/cobra"
 )
 
 const (
