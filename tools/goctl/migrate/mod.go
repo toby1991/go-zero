@@ -6,17 +6,17 @@ import (
 	"os"
 	"time"
 
-	"github.com/toby1991/go-zero/core/stringx"
-	"github.com/toby1991/go-zero/tools/goctl/rpc/execx"
-	"github.com/toby1991/go-zero/tools/goctl/util/console"
-	"github.com/toby1991/go-zero/tools/goctl/util/ctx"
+	"github.com/zeromicro/go-zero/core/stringx"
+	"github.com/zeromicro/go-zero/tools/goctl/rpc/execx"
+	"github.com/zeromicro/go-zero/tools/goctl/util/console"
+	"github.com/zeromicro/go-zero/tools/goctl/util/ctx"
 )
 
 const (
 	deprecatedGoZeroMod = "github.com/tal-tech/go-zero"
 	deprecatedBuilderx  = "github.com/tal-tech/go-zero/tools/goctl/model/sql/builderx"
-	replacementBuilderx = "github.com/toby1991/go-zero/core/stores/builder"
-	goZeroMod           = "github.com/toby1991/go-zero"
+	replacementBuilderx = "github.com/zeromicro/go-zero/core/stores/builder"
+	goZeroMod           = "github.com/zeromicro/go-zero"
 )
 
 var errInvalidGoMod = errors.New("it's only working for go module")

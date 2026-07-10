@@ -8,7 +8,7 @@ import (
     "entgo.io/ent/schema/field"
     "entgo.io/ent/schema/index"
 
-    "github.com/toby1991/go-zero-utils/db/ent/schema/mixin"
+    "github.com/zeromicro/go-zero-utils/db/ent/schema/mixin"
 )
 
 // User holds the schema definition for the User entity.

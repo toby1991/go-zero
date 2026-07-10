@@ -7,9 +7,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/toby1991/go-zero/core/logx"
-	"github.com/toby1991/go-zero/core/threading"
-	"github.com/toby1991/go-zero/zrpc/resolver/internal/kube"
+	"github.com/zeromicro/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/threading"
+	"github.com/zeromicro/go-zero/zrpc/resolver/internal/kube"
 	"google.golang.org/grpc/resolver"
 	v1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/informers"

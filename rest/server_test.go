@@ -15,13 +15,13 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/toby1991/go-zero/core/conf"
-	"github.com/toby1991/go-zero/core/logx/logtest"
-	"github.com/toby1991/go-zero/rest/chain"
-	"github.com/toby1991/go-zero/rest/httpx"
-	"github.com/toby1991/go-zero/rest/internal/cors"
-	"github.com/toby1991/go-zero/rest/internal/header"
-	"github.com/toby1991/go-zero/rest/router"
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/core/logx/logtest"
+	"github.com/zeromicro/go-zero/rest/chain"
+	"github.com/zeromicro/go-zero/rest/httpx"
+	"github.com/zeromicro/go-zero/rest/internal/cors"
+	"github.com/zeromicro/go-zero/rest/internal/header"
+	"github.com/zeromicro/go-zero/rest/router"
 )
 
 const (

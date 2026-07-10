@@ -11,8 +11,8 @@ import (
 	{{.internalSvcPackage}}
 	{{.internalConfigPackage}}
 
-	"github.com/toby1991/go-zero/core/conf"
-	"github.com/toby1991/go-zero/zrpc"
+	"github.com/zeromicro/go-zero/core/conf"
+	"github.com/zeromicro/go-zero/zrpc"
 	"google.golang.org/grpc"
 )
 

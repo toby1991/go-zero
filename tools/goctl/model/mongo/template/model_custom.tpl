@@ -1,9 +1,9 @@
 package model
 
 {{if .Cache}}import (
-    "github.com/toby1991/go-zero/core/stores/cache"
-    "github.com/toby1991/go-zero/core/stores/monc"
-){{else}}import "github.com/toby1991/go-zero/core/stores/mon"{{end}}
+    "github.com/zeromicro/go-zero/core/stores/cache"
+    "github.com/zeromicro/go-zero/core/stores/monc"
+){{else}}import "github.com/zeromicro/go-zero/core/stores/mon"{{end}}
 
 {{if .Easy}}
 const {{.Type}}CollectionName = "{{.snakeType}}"

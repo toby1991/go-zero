@@ -1,4 +1,4 @@
-module github.com/toby1991/go-zero/tools/goctl
+module github.com/zeromicro/go-zero/tools/goctl
 
 go 1.21
 
@@ -12,7 +12,7 @@ require (
 	github.com/spf13/cobra v1.9.1
 	github.com/spf13/pflag v1.0.6
 	github.com/stretchr/testify v1.10.0
-	github.com/toby1991/go-zero v1.8.2-withutils.5
+	github.com/zeromicro/go-zero v1.8.2-withutils.5
 	github.com/withfig/autocomplete-tools/integrations/cobra v1.2.1
 	github.com/zeromicro/antlr v0.0.1
 	github.com/zeromicro/ddl-parser v1.0.5

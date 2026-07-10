@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/toby1991/go-zero/tools/goctl/api/parser/g4/gen/api"
+	"github.com/zeromicro/go-zero/tools/goctl/api/parser/g4/gen/api"
 )
 
 type (

@@ -1,12 +1,12 @@
 package config
 
 import (
-    "github.com/toby1991/go-zero-utils/db"
-    "github.com/toby1991/go-zero-utils/bizredis"
-	"github.com/toby1991/go-zero-utils/bizmemory"
-    "github.com/toby1991/go-zero-utils/queue/faktory"
-    "github.com/toby1991/go-zero-utils/queue/nsq"
-    "github.com/toby1991/go-zero/zrpc"
+    "github.com/zeromicro/go-zero-utils/db"
+    "github.com/zeromicro/go-zero-utils/bizredis"
+	"github.com/zeromicro/go-zero-utils/bizmemory"
+    "github.com/zeromicro/go-zero-utils/queue/faktory"
+    "github.com/zeromicro/go-zero-utils/queue/nsq"
+    "github.com/zeromicro/go-zero/zrpc"
 )
 
 type Config struct {

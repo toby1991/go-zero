@@ -10,7 +10,7 @@ import (
 	"time"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/toby1991/go-zero/core/stat"
+	"github.com/zeromicro/go-zero/core/stat"
 )
 
 func init() {

@@ -8,8 +8,8 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/toby1991/go-zero/core/lang"
-	"github.com/toby1991/go-zero/core/logx"
+	"github.com/zeromicro/go-zero/core/lang"
+	"github.com/zeromicro/go-zero/core/logx"
 )
 
 func TestRoutineId(t *testing.T) {

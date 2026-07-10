@@ -12,11 +12,11 @@ import (
 
 	"github.com/alicebob/miniredis/v2"
 	"github.com/stretchr/testify/assert"
-	"github.com/toby1991/go-zero/core/errorx"
-	"github.com/toby1991/go-zero/core/hash"
-	"github.com/toby1991/go-zero/core/stores/redis"
-	"github.com/toby1991/go-zero/core/stores/redis/redistest"
-	"github.com/toby1991/go-zero/core/syncx"
+	"github.com/zeromicro/go-zero/core/errorx"
+	"github.com/zeromicro/go-zero/core/hash"
+	"github.com/zeromicro/go-zero/core/stores/redis"
+	"github.com/zeromicro/go-zero/core/stores/redis/redistest"
+	"github.com/zeromicro/go-zero/core/syncx"
 )
 
 var _ Cache = (*mockedNode)(nil)

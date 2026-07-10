@@ -4,7 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/toby1991/go-zero/core/stringx"
+	"github.com/zeromicro/go-zero/core/stringx"
 )
 
 func TestMaxInt(t *testing.T) {

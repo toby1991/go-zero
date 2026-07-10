@@ -3,8 +3,8 @@ package main
 import (
 	"flag"
 	"fmt"
-	"github.com/toby1991/go-zero-utils/pprof"
-	"github.com/toby1991/go-zero/core/service"
+	"github.com/zeromicro/go-zero-utils/pprof"
+	"github.com/zeromicro/go-zero/core/service"
 
 	{{.importPackages}}
 )

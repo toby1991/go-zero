@@ -6,7 +6,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
-	"github.com/toby1991/go-zero/core/prometheus"
+	"github.com/zeromicro/go-zero/core/prometheus"
 	"google.golang.org/grpc"
 )
 

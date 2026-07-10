@@ -55,7 +55,7 @@ import (
     "fmt"
     "log"
 
-    "github.com/toby1991/go-zero/core/mr"
+    "github.com/zeromicro/go-zero/core/mr"
 )
 
 func main() {

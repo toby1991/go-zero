@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/toby1991/go-zero/tools/goctl/config"
-	"github.com/toby1991/go-zero/tools/goctl/pkg/env"
+	"github.com/zeromicro/go-zero/tools/goctl/config"
+	"github.com/zeromicro/go-zero/tools/goctl/pkg/env"
 	"github.com/zeromicro/ddl-parser/parser"
 )
 

@@ -1,6 +1,6 @@
 package internal
 
-import "github.com/toby1991/go-zero/zrpc/internal/serverinterceptors"
+import "github.com/zeromicro/go-zero/zrpc/internal/serverinterceptors"
 
 type (
 	// StatConf defines the stat config.
