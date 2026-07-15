@@ -69,6 +69,10 @@ func (g *Generator) buildProtocCmd(c *ZRpcContext, pwd string) (string, error) {
 
 	cmd := c.ProtocCmd
 	for _, f := range importedFiles {
+		if isBundledRuntimeProto(srcDir, f) {
+			continue
+		}
+
 		// Use the path relative to the best-matching --proto_path entry so that
 		// protoc's source_relative output lands in the correct directory.
 		// e.g. if --proto_path=./ext and the file is ext/common/types.proto,
@@ -77,6 +81,30 @@ func (g *Generator) buildProtocCmd(c *ZRpcContext, pwd string) (string, error) {
 		cmd += " " + rel
 	}
 	return cmd, nil
+}
+
+// isBundledRuntimeProto 判断 protoFile 是否为 thirdparty.tar.gz 内置、且已有
+// canonical module 提供 Go 实现的 proto。这些文件必须继续参与 protoc import
+// 解析，但不能加入生成目标，否则会在服务目录重复生成外部 Go package。
+func isBundledRuntimeProto(srcDir, protoFile string) bool {
+	rel, err := filepath.Rel(srcDir, protoFile)
+	if err != nil {
+		return false
+	}
+
+	switch filepath.ToSlash(filepath.Clean(rel)) {
+	case "thirdparty/errors/errors.proto",
+		"thirdparty/google/api/annotations.proto",
+		"thirdparty/google/api/http.proto",
+		"thirdparty/google/api/httpbody.proto",
+		"thirdparty/google/protobuf/descriptor.proto",
+		"thirdparty/google/protobuf/duration.proto",
+		"thirdparty/google/protobuf/timestamp.proto",
+		"thirdparty/validate/validate.proto":
+		return true
+	default:
+		return false
+	}
 }
 
 // relativeToProtoPath returns the path of f relative to the most specific

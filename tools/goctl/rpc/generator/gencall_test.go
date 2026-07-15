@@ -23,6 +23,8 @@ type mockDirContext struct {
 
 func (m *mockDirContext) GetCall() Dir                   { return m.callDir }
 func (m *mockDirContext) GetEtc() Dir                    { return Dir{} }
+func (m *mockDirContext) GetEnt() Dir                    { return Dir{} }
+func (m *mockDirContext) GetThirdPartyPb() Dir           { return Dir{} }
 func (m *mockDirContext) GetInternal() Dir               { return Dir{} }
 func (m *mockDirContext) GetConfig() Dir                 { return Dir{} }
 func (m *mockDirContext) GetLogic() Dir                  { return Dir{} }
