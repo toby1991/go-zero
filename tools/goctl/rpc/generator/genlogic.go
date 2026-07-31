@@ -17,9 +17,11 @@ import (
 
 const logicFunctionTemplate = `{{if .hasComment}}{{.comment}}{{end}}
 func (l *{{.logicName}}) {{.method}} ({{if .hasReq}}in {{.request}}{{if .stream}},stream {{.streamBody}}{{end}}{{else}}stream {{.streamBody}}{{end}}) ({{if .hasReply}}{{.response}},{{end}} error) {
-	if err := in.Validate(); err != nil {
-		return nil, err
-	}
+{{if .hasReq}}	if err := in.Validate(); err != nil {
+{{if .stream}}		return err
+{{else}}		return nil, err
+{{end}}	}
+{{end}}
 
 	// todo: add your logic here and delete this line
 	

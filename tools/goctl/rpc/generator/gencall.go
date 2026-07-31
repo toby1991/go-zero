@@ -32,9 +32,10 @@ func (m *default{{.serviceName}}) {{.method}}(ctx context.Context{{if .hasReq}},
 	callDirectFunctionTemplate = `
 {{if .hasComment}}{{.comment}}{{end}}
 func (l *direct{{.serviceName}}) {{.method}}(ctx context.Context{{if .hasReq}}, in *{{.pbRequest}}{{end}}, opts ...grpc.CallOption) ({{if .notStream}}*{{.pbResponse}}, {{else}}{{.streamBody}},{{end}} error) {
-	logicInstance := logic.New{{.method}}Logic(ctx, l.svcCtx)
+{{if .isStreaming}}	return nil, status.Error(codes.Unimplemented, "direct mode does not support streaming RPCs")
+{{else}}	logicInstance := logic.New{{.method}}Logic(ctx, l.svcCtx)
 	return logicInstance.{{.method}}({{if .hasReq}}in{{end}})
-}
+{{end}}}
 `
 )
 
@@ -71,6 +72,7 @@ func (g *Generator) genCallGroup(ctx DirContext, proto parser.Proto, cfg *conf.C
 		filename := filepath.Join(dir.Filename, childDir, fmt.Sprintf("%s.go", callFilename))
 		isCallPkgSameToPbPkg := childDir == ctx.GetProtoGo().Filename
 		isCallPkgSameToGrpcPkg := childDir == ctx.GetProtoGo().Filename
+		hasUnary, hasStreaming := getServiceRPCModes(service)
 
 		serviceName := stringx.From(service.Name).ToCamel()
 
@@ -110,7 +112,7 @@ func (g *Generator) genCallGroup(ctx DirContext, proto parser.Proto, cfg *conf.C
 			return err
 		}
 
-		directFunctions, err := g.genDirectFunction(serviceName, service)
+		directFunctions, err := g.genDirectFunction(proto.PbPackage, serviceName, service, isCallPkgSameToGrpcPkg)
 		if err != nil {
 			return err
 		}
@@ -127,7 +129,14 @@ func (g *Generator) genCallGroup(ctx DirContext, proto parser.Proto, cfg *conf.C
 			protoGoPackage = ""
 		}
 
-		internalLogicPackage := fmt.Sprintf(`"%s"`, ctx.GetLogic().Package)
+		internalLogicPackage := ""
+		if hasUnary {
+			logicChildPkg, err := ctx.GetLogic().GetChildPackage(service.Name)
+			if err != nil {
+				return err
+			}
+			internalLogicPackage = fmt.Sprintf(`logic "%s"`, logicChildPkg)
+		}
 		internalSvcPackage := fmt.Sprintf(`"%s"`, ctx.GetSvc().Package)
 		internalConfigPackage := fmt.Sprintf(`"%s"`, ctx.GetConfig().Package)
 
@@ -149,6 +158,8 @@ func (g *Generator) genCallGroup(ctx DirContext, proto parser.Proto, cfg *conf.C
 			"internalLogicPackage":  internalLogicPackage,
 			"internalSvcPackage":    internalSvcPackage,
 			"internalConfigPackage": internalConfigPackage,
+			"hasUnary":              hasUnary,
+			"hasStreaming":          hasStreaming,
 		}, filename, true); err != nil {
 			return err
 		}
@@ -170,6 +181,7 @@ func (g *Generator) genCallInCompatibility(ctx DirContext, proto parser.Proto,
 	}
 
 	serviceName := stringx.From(service.Name).ToCamel()
+	hasUnary, hasStreaming := getServiceRPCModes(service)
 	alias := collection.NewSet[string]()
 	var hasSameNameBetweenMessageAndService bool
 	for _, item := range proto.Message {
@@ -200,7 +212,7 @@ func (g *Generator) genCallInCompatibility(ctx DirContext, proto parser.Proto,
 		return err
 	}
 
-	directFunctions, err := g.genDirectFunction(serviceName, service)
+	directFunctions, err := g.genDirectFunction(proto.PbPackage, serviceName, service, isCallPkgSameToGrpcPkg)
 	if err != nil {
 		return err
 	}
@@ -217,7 +229,10 @@ func (g *Generator) genCallInCompatibility(ctx DirContext, proto parser.Proto,
 		protoGoPackage = ""
 	}
 
-	internalLogicPackage := fmt.Sprintf(`"%s"`, ctx.GetLogic().Package)
+	internalLogicPackage := ""
+	if hasUnary {
+		internalLogicPackage = fmt.Sprintf(`"%s"`, ctx.GetLogic().Package)
+	}
 	internalSvcPackage := fmt.Sprintf(`"%s"`, ctx.GetSvc().Package)
 	internalConfigPackage := fmt.Sprintf(`"%s"`, ctx.GetConfig().Package)
 
@@ -239,6 +254,8 @@ func (g *Generator) genCallInCompatibility(ctx DirContext, proto parser.Proto,
 		"internalLogicPackage":  internalLogicPackage,
 		"internalSvcPackage":    internalSvcPackage,
 		"internalConfigPackage": internalConfigPackage,
+		"hasUnary":              hasUnary,
+		"hasStreaming":          hasStreaming,
 	}, filename, true)
 }
 
@@ -372,7 +389,8 @@ func (g *Generator) getInterfaceFuncs(goPackage, mainGoPackage string, service p
 	return functions, nil
 }
 
-func (g *Generator) genDirectFunction(serviceName string, service parser.Service) ([]string, error) {
+func (g *Generator) genDirectFunction(goPackage, serviceName string, service parser.Service,
+	isCallPkgSameToGrpcPkg bool) ([]string, error) {
 	functions := make([]string, 0)
 
 	for _, rpc := range service.RPC {
@@ -384,6 +402,9 @@ func (g *Generator) genDirectFunction(serviceName string, service parser.Service
 		comment := parser.GetComment(rpc.Doc())
 		streamServer := fmt.Sprintf("%s_%s%s", parser.CamelCase(service.Name),
 			parser.CamelCase(rpc.Name), "Client")
+		if !isCallPkgSameToGrpcPkg {
+			streamServer = fmt.Sprintf("%s.%s", goPackage, streamServer)
+		}
 		buffer, err := util.With("directFn").Parse(text).Execute(map[string]any{
 			"serviceName": serviceName,
 			"method":      parser.CamelCase(rpc.Name),
@@ -394,6 +415,7 @@ func (g *Generator) genDirectFunction(serviceName string, service parser.Service
 			"hasReq":      !rpc.StreamsRequest,
 			"notStream":   !rpc.StreamsRequest && !rpc.StreamsReturns,
 			"streamBody":  streamServer,
+			"isStreaming": rpc.StreamsRequest || rpc.StreamsReturns,
 		})
 		if err != nil {
 			return nil, err
@@ -403,6 +425,18 @@ func (g *Generator) genDirectFunction(serviceName string, service parser.Service
 	}
 
 	return functions, nil
+}
+
+func getServiceRPCModes(service parser.Service) (hasUnary, hasStreaming bool) {
+	for _, rpc := range service.RPC {
+		if rpc.StreamsRequest || rpc.StreamsReturns {
+			hasStreaming = true
+		} else {
+			hasUnary = true
+		}
+	}
+
+	return hasUnary, hasStreaming
 }
 
 // buildExtraImportLines converts a set of import paths into quoted import lines

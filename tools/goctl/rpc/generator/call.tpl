@@ -8,9 +8,13 @@ import (
 	{{.pbPackage}}
 	{{if ne .pbPackage .protoGoPackage}}{{.protoGoPackage}}{{end}}
 	{{.extraImports}}
-	{{.internalLogicPackage}}
+	{{if .hasUnary}}{{.internalLogicPackage}}{{end}}
 	{{.internalSvcPackage}}
 	{{.internalConfigPackage}}
+	{{if .hasStreaming}}
+	"google.golang.org/grpc/codes"
+	"google.golang.org/grpc/status"
+	{{end}}
 
 	"github.com/toby1991/go-zero/core/conf"
 	"github.com/toby1991/go-zero/zrpc"
